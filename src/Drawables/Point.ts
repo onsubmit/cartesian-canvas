@@ -1,17 +1,25 @@
 import { CanvasModel } from '../CanvasModel';
-import { Colors } from '../Colors';
 import { Constants } from '../Constants';
 import { Coordinate } from '../Coordinate';
 import { Drawable } from './Drawable';
+
+export type PointArgs = {
+  coordinate: Coordinate;
+  color?: string;
+};
 
 export class Point extends Drawable {
   private static RADIUS = 4;
 
   private _coordinate: Coordinate;
 
-  constructor(coordinate: Coordinate, color: string = Colors.black) {
+  constructor({ coordinate, color }: PointArgs) {
     super(color);
     this._coordinate = coordinate;
+  }
+
+  get coordinate(): Coordinate {
+    return this._coordinate;
   }
 
   draw = (canvasModel: CanvasModel) => {

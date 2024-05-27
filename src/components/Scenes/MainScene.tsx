@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { CanvasModel } from '../../CanvasModel';
 import { CartesianPlane } from '../../CartesianPlane';
+import { LineSegment } from '../../Drawables/LineSegment';
 import { Point } from '../../Drawables/Point';
 import { Scene, SceneCanvases, SceneProps } from './Scene';
 
@@ -51,10 +52,14 @@ function MainScene() {
         return null;
       }
 
+      const point1 = new Point({ coordinate: { x: -5, y: 5 } });
+      const point2 = new Point({ coordinate: { x: 5, y: -5 } });
+      const line1 = new LineSegment({ point1, point2 });
+
       return {
         background: {
           canvasModel: prev.background?.canvasModel ?? null,
-          drawables: [new Point({ x: 0, y: 0 })],
+          drawables: [point1, point2, line1],
         },
       };
     });
