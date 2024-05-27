@@ -7,7 +7,7 @@ import { Polygon } from '../../Drawables/Polygon';
 import { Scene, SceneCanvases, SceneProps } from './Scene';
 
 function MainScene() {
-  const CANVAS_SCALE = 30;
+  const CANVAS_SCALE = 100;
 
   const sceneCanvasesRef = useRef<SceneCanvases | null>(null);
   const [sceneProps, setSceneProps] = useState<SceneProps | null>(null);
@@ -29,12 +29,12 @@ function MainScene() {
 
     const cartesianPlane: CartesianPlane = {
       x: {
-        min: -10,
-        max: 10,
+        min: -6,
+        max: 6,
       },
       y: {
-        min: -10,
-        max: 10,
+        min: -6,
+        max: 6,
       },
     };
 
@@ -61,10 +61,12 @@ function MainScene() {
         ],
       });
 
+      const splitPoints = diamond.lineSegments.flatMap((segment) => segment.split(10));
+
       return {
         background: {
           canvasModel: prev.background?.canvasModel ?? null,
-          drawables: [diamond],
+          drawables: [diamond, ...splitPoints],
         },
       };
     });

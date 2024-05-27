@@ -27,4 +27,27 @@ export class LineSegment extends Drawable {
     canvasModel.context.lineTo(p2.x, p2.y);
     canvasModel.context.stroke();
   };
+
+  split = (numPoints: number): Array<Point> => {
+    const points: Array<Point> = [];
+
+    if (numPoints < 0) {
+      throw new Error(`numPoints must be non-negative`);
+    }
+
+    if (numPoints === 0) {
+      return [];
+    }
+
+    const { x: x1, y: y1 } = this._point1.coordinate;
+    const { x: x2, y: y2 } = this._point2.coordinate;
+    const vecX = (x2 - x1) / numPoints;
+    const vecY = (y2 - y1) / numPoints;
+
+    for (let i = 0; i < numPoints; i++) {
+      points.push(new Point({ coordinate: { x: x1 + vecX * i, y: y1 + vecY * i } }));
+    }
+
+    return points;
+  };
 }

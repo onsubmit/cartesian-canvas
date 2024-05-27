@@ -9,22 +9,25 @@ export type PolygonArgs = {
 };
 
 export class Polygon extends Drawable {
-  private _points: Array<Point>;
+  private _lineSegments: Array<LineSegment>;
 
   constructor({ points, color }: PolygonArgs) {
     super(color);
-    this._points = points;
+    this._lineSegments = [];
+
+    for (let i = 0, len = points.length; i < len; i++) {
+      const point1 = points[i]!;
+      const point2 = points[(i + 1) % len]!;
+      const segment = new LineSegment({ point1, point2, color: this.color });
+      this._lineSegments.push(segment);
+    }
+  }
+
+  get lineSegments(): Array<LineSegment> {
+    return this._lineSegments;
   }
 
   draw = (canvasModel: CanvasModel): void => {
-    for (let i = 0, len = this._points.length; i < len; i++) {
-      const point1 = this._points[i]!;
-      const point2 = this._points[(i + 1) % len]!;
-      const segment = new LineSegment({ point1, point2, color: this.color });
-
-      point1.draw(canvasModel);
-      point2.draw(canvasModel);
-      segment.draw(canvasModel);
-    }
+    this._lineSegments.forEach((segment) => segment.draw(canvasModel));
   };
 }
