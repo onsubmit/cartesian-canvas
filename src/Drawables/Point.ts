@@ -9,7 +9,7 @@ export type PointArgs = {
 };
 
 export class Point extends Drawable {
-  private static RADIUS = 4;
+  private static RADIUS = 3;
 
   private _coordinate: Coordinate;
 
