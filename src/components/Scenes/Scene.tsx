@@ -30,20 +30,10 @@ const Scene = forwardRef<SceneCanvases, SceneProps>(function Scene(
       return;
     }
 
-    function step() {
-      if (!background?.canvasModel) {
-        return;
-      }
+    const backgroundDrawer = new Drawer(background.canvasModel);
 
-      const backgroundDrawer = new Drawer(background.canvasModel);
-
-      backgroundDrawer.clear();
-      background.drawables.forEach((d) => backgroundDrawer.draw(d));
-
-      window.requestAnimationFrame(step);
-    }
-
-    window.requestAnimationFrame(step);
+    backgroundDrawer.clear();
+    background.drawables.forEach((d) => backgroundDrawer.draw(d));
   }, [background]);
 
   useImperativeHandle(
@@ -57,14 +47,12 @@ const Scene = forwardRef<SceneCanvases, SceneProps>(function Scene(
   );
 
   return (
-    <>
-      <Canvas
-        ref={backgroundRef}
-        className={styles.canvas}
-        width={background?.canvasModel?.canvasDimensions.width ?? 0}
-        height={background?.canvasModel?.canvasDimensions.height ?? 0}
-      />
-    </>
+    <Canvas
+      ref={backgroundRef}
+      className={styles.canvas}
+      width={background?.canvasModel?.canvasDimensions.width ?? 0}
+      height={background?.canvasModel?.canvasDimensions.height ?? 0}
+    />
   );
 });
 
