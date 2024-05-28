@@ -23,6 +23,7 @@ export class LineSegment extends Drawable {
     const p2 = this.mapCoordsToCanvas(this._point2.coordinate, canvasModel);
     canvasModel.context.beginPath();
     canvasModel.context.strokeStyle = this.color;
+    canvasModel.context.lineWidth = 0.5;
     canvasModel.context.moveTo(p1.x, p1.y);
     canvasModel.context.lineTo(p2.x, p2.y);
     canvasModel.context.stroke();

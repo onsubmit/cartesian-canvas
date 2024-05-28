@@ -6,7 +6,7 @@ export abstract class Drawable {
   protected color: string;
 
   constructor(color?: string) {
-    this.color = color ?? Colors.black;
+    this.color = color ?? Colors.veryLightGrey;
   }
 
   abstract draw(canvasModel: CanvasModel): void;

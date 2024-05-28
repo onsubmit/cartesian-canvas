@@ -55,13 +55,18 @@ function MainScene() {
       }
 
       const ngonPoints: Array<Point> = [];
-      const ngonSides = 5;
+      const ngonSides = 256;
       const radius = 10;
-      const twoPiDivSides = Constants.TWO_PI / ngonSides;
+      const piDivSides = Math.PI / ngonSides;
+      const twoPiDivSides = 2 * piDivSides;
+      const adjustment = ngonSides % 2 === 0 ? piDivSides : Constants.PI_OVER_2;
       for (let i = 0; i < ngonSides; i++) {
         ngonPoints.push(
           new Point({
-            coordinate: { x: radius * Math.cos(twoPiDivSides * i), y: radius * Math.sin(twoPiDivSides * i) },
+            coordinate: {
+              x: radius * Math.cos(adjustment + twoPiDivSides * i),
+              y: radius * Math.sin(adjustment + twoPiDivSides * i),
+            },
           })
         );
       }
@@ -70,12 +75,12 @@ function MainScene() {
         points: ngonPoints,
       });
 
-      const splitPoints = ngon.lineSegments.map((segment) => segment.split(75));
+      const splitPoints = ngon.lineSegments.map((segment) => segment.split(1));
       const splitPointsLength = splitPoints.length;
       const curveSegments: Array<LineSegment> = [];
       for (let i = 0; i < splitPointsLength; i++) {
         const points1 = splitPoints[i]!;
-        const points2 = splitPoints[(i + 1) % splitPointsLength]!;
+        const points2 = splitPoints[(i + Math.floor(ngonSides / 2.25)) % splitPointsLength]!;
         for (let j = 0; j < points1.length; j++) {
           const point1 = points1[j]!;
           const point2 = points2[j]!;
